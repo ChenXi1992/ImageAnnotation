@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+
+    <title>Hello, world</title>
+
+
+    <style type="text/css">
+      .vertical {
+        width:400px;
+        height:400px;
+
+        display: flex;
+        justify-content: center;
+        /*margin: 0 auto;*/
+ /*       text-align: center;*/
+        /*border: 1px solid black;*/
+      }
+
+      .centerBtn{
+        display: flex;
+        justify-content: center;
+        border: 5px ;
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+    <div class = "container vertical" > 
+      <img src="static/pic1.png" class ="img-circle " width="100%" height="100%">
+      <!-- <img src="static/pic2.png" class ="img-circle" width="100%" height="100%"> -->
+    </div>
+<div class="centerBtn">
+  <button class="btn btn-primary"  type="button" >Done</button>
+</div>
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="static/jquery-3.3.1.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    
+    <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+
+   
+
+    <script>
+        $("img").click(function(e){
+
+
+
+         // alert(e.clientX -  this.offsetLeft)
+
+          var data={
+          'x':e.clientX -  this.offsetLeft,
+          'y':e.clientY - this.offsetTop ,
+
+          'pic_no': $("img").attr('src')
+          // 'pic_no':this.src
+                  }
+
+
+         $.ajax({
+          type:'GET',
+          url:'http://127.0.0.1:5000/cutPic',
+          data:data,
+          dataType:'json',//希望服务器返回json格式的数据
+          success:function(data){
+              // alert(JSON.stringify(data))
+               //data["url"]   
+              alert('cut the pic sucessfully')    
+                   }
+                 });
+       }
+
+        
+        );
+
+        $("button").click(function(){
+          
+          // alert("button")
+           var data={
+          'image':$('img').attr('src'),
+                  }
+
+         $.ajax({
+          type:'GET',
+          url:'http://127.0.0.1:5000/img',
+          data:data,
+          dataType:'json',//希望服务器返回json格式的数据
+          success:function(data){
+              alert(JSON.stringify(data)); 
+              // alert('what')   
+              $('img').attr('src',data['url'])    
+                  }
+                 });
+        });
+    </script>
+  </body>
+</html>
